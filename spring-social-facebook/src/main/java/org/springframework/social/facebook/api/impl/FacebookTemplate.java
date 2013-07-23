@@ -99,7 +99,7 @@ public class FacebookTemplate extends AbstractOAuth2ApiBinding implements Facebo
 
 	private OpenGraphOperations openGraphOperations;
 
-	private ObjectMapper objectMapper;
+	protected ObjectMapper objectMapper;
 
 	private String applicationNamespace;
 
@@ -251,6 +251,22 @@ public class FacebookTemplate extends AbstractOAuth2ApiBinding implements Facebo
 		return response.getBody();
 	}
 	
+
+	public <T> String addConnection(String objectId, String connectionType,
+			Class<T> type, MultiValueMap<String, String> queryParameters, T connectionObject) {
+		String connectionPath = connectionType != null && connectionType.length() > 0 ? "/" + connectionType : "";
+		URIBuilder uriBuilder = URIBuilder.fromUri(GRAPH_API_URL + objectId + connectionPath).queryParams(queryParameters);		
+		return getRestTemplate().postForObject(uriBuilder.build(), connectionObject, String.class);
+	}
+
+	public String deleteConnection(String objectId, String connectionType,
+			Class<?> type, String connectedObjectId) {
+		LinkedMultiValueMap<String, String> deleteRequest = new LinkedMultiValueMap<String, String>();
+		deleteRequest.set("method", "delete");
+		URI uri = URIBuilder.fromUri(GRAPH_API_URL + objectId + "/" + connectionType + "/" + connectedObjectId).build();
+		return getRestTemplate().postForObject(uri, deleteRequest, String.class);
+	}
+	
 	@SuppressWarnings("unchecked")
 	public String publish(String objectId, String connectionType, MultiValueMap<String, Object> data) {
 		MultiValueMap<String, Object> requestData = new LinkedMultiValueMap<String, Object>(data);
@@ -259,23 +275,30 @@ public class FacebookTemplate extends AbstractOAuth2ApiBinding implements Facebo
 		return (String) response.get("id");
 	}
 	
+	public boolean update(String objectId, MultiValueMap<String, Object> data) {
+		MultiValueMap<String, Object> requestData = new LinkedMultiValueMap<String, Object>(data);
+		URI uri = URIBuilder.fromUri(GRAPH_API_URL + objectId).build();
+		String response = getRestTemplate().postForObject(uri, requestData, String.class);
+		return Boolean.valueOf(response);
+	}
+	
 	public void post(String objectId, String connectionType, MultiValueMap<String, String> data) {
 		URI uri = URIBuilder.fromUri(GRAPH_API_URL + objectId + "/" + connectionType).build();
 		getRestTemplate().postForObject(uri, new LinkedMultiValueMap<String, String>(data), String.class);
 	}
 	
-	public void delete(String objectId) {
+	public String delete(String objectId) {
 		LinkedMultiValueMap<String, String> deleteRequest = new LinkedMultiValueMap<String, String>();
 		deleteRequest.set("method", "delete");
 		URI uri = URIBuilder.fromUri(GRAPH_API_URL + objectId).build();
-		getRestTemplate().postForObject(uri, deleteRequest, String.class);
+		return getRestTemplate().postForObject(uri, deleteRequest, String.class);
 	}
 	
-	public void delete(String objectId, String connectionType) {
+	public String delete(String objectId, String connectionType) {
 		LinkedMultiValueMap<String, String> deleteRequest = new LinkedMultiValueMap<String, String>();
 		deleteRequest.set("method", "delete");
 		URI uri = URIBuilder.fromUri(GRAPH_API_URL + objectId + "/" + connectionType).build();
-		getRestTemplate().postForObject(uri, deleteRequest, String.class);
+		return getRestTemplate().postForObject(uri, deleteRequest, String.class);
 	}
 	
 	// AbstractOAuth2ApiBinding hooks
@@ -341,5 +364,4 @@ public class FacebookTemplate extends AbstractOAuth2ApiBinding implements Facebo
 		}
 		return builder.toString();
 	}
-	
 }
