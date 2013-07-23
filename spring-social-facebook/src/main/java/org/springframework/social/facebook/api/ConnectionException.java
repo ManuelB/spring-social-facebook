@@ -6,7 +6,7 @@ import org.springframework.social.OperationNotPermittedException;
 public class ConnectionException extends OperationNotPermittedException {
 
 	public ConnectionException(String message) {
-		super(message);
+		super("FacebookAPI", message);
 	}
 
 }

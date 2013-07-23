@@ -15,6 +15,7 @@
  */
 package org.springframework.social.facebook.api.ads.impl;
 
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
 import org.springframework.social.facebook.api.ads.AccountGroupOperations;
 import org.springframework.social.facebook.api.ads.AccountOperations;
@@ -81,8 +82,8 @@ public class FacebookAdsTemplate extends FacebookTemplate implements
 	}
 
 	@Override
-	protected MappingJacksonHttpMessageConverter getJsonMessageConverter() {
-		MappingJacksonHttpMessageConverter converter = super
+	protected MappingJackson2HttpMessageConverter getJsonMessageConverter() {
+		MappingJackson2HttpMessageConverter converter = super
 				.getJsonMessageConverter();
 		objectMapper.registerModule(new FacebookAdsModule());
 		converter.setObjectMapper(objectMapper);

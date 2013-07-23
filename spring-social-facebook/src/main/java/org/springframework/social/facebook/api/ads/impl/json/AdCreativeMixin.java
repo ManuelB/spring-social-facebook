@@ -15,9 +15,9 @@
  */
 package org.springframework.social.facebook.api.ads.impl.json;
 
-import org.codehaus.jackson.annotate.JsonCreator;
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
-import org.codehaus.jackson.annotate.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * @author Karthick Sankarachary
@@ -25,35 +25,35 @@ import org.codehaus.jackson.annotate.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 abstract class AdCreativeMixin {
 
-	@JsonCreator
-	AdCreativeMixin() {
-	}
+    @JsonCreator
+    AdCreativeMixin() {
+    }
 
-	@JsonProperty("object_id")
-	int objectId;
+    @JsonProperty("object_id")
+    int objectId;
 
-	@JsonProperty("image_hash")
-	String imageHash;
+    @JsonProperty("image_hash")
+    String imageHash;
 
-	@JsonProperty("image_url")
-	String imageUrl;
+    @JsonProperty("image_url")
+    String imageUrl;
 
-	@JsonProperty("creative_id")
-	int creativeId;
+    @JsonProperty("creative_id")
+    int creativeId;
 
-	@JsonProperty("count_current_adgroups")
-	String countCurrentAdGroups;
+    @JsonProperty("count_current_adgroups")
+    String countCurrentAdGroups;
 
-	@JsonProperty("run_status")
-	String runStatus;
+    @JsonProperty("run_status")
+    String runStatus;
 
-	@JsonProperty("link_url")
-	String linkUrl;
+    @JsonProperty("link_url")
+    String linkUrl;
 
-	@JsonProperty("preview_url")
-	String previewUrl;
+    @JsonProperty("preview_url")
+    String previewUrl;
 
-	@JsonProperty("related_fan_page")
-	String relatedFanPage;
+    @JsonProperty("related_fan_page")
+    String relatedFanPage;
 
 }

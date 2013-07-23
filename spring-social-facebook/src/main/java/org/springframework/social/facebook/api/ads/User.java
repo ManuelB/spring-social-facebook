@@ -17,8 +17,9 @@ package org.springframework.social.facebook.api.ads;
 
 import java.util.List;
 
-import org.codehaus.jackson.map.annotate.JsonDeserialize;
 import org.springframework.social.facebook.api.ads.impl.json.UserRoleDeserializer;
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /**
  * @author Karthick Sankarachary

@@ -15,8 +15,6 @@
  */
 package org.springframework.social.facebook.api.ads.impl.json;
 
-import org.codehaus.jackson.Version;
-import org.codehaus.jackson.map.module.SimpleModule;
 import org.springframework.social.facebook.api.ads.AdAccount;
 import org.springframework.social.facebook.api.ads.AdAccountGroup;
 import org.springframework.social.facebook.api.ads.AdCampaign;
@@ -29,10 +27,10 @@ import org.springframework.social.facebook.api.ads.User;
 /**
  * @author Karthick Sankarachary
  */
-public class FacebookAdsModule extends SimpleModule {
+public class FacebookAdsModule extends com.fasterxml.jackson.databind.module.SimpleModule {
 
 	public FacebookAdsModule() {
-		super("FacebookAdsModule", new Version(1, 0, 0, null));
+		super("FacebookAdsModule");
 	}
 
 	@Override

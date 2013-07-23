@@ -15,7 +15,8 @@
  */
 package org.springframework.social.facebook.api.ads;
 
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 
 /**
  * @author Karthick Sankarachary
