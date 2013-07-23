@@ -20,7 +20,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.social.facebook.api.Action;
 import org.springframework.social.facebook.api.CheckinPost;
 import org.springframework.social.facebook.api.Comment;
 import org.springframework.social.facebook.api.LinkPost;
@@ -51,106 +50,100 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /**
- * Annotated mixin to add Jackson annotations to Post. Also defines Post
- * subtypes to deserialize into based on the "type" attribute.
- * 
+ * Annotated mixin to add Jackson annotations to Post.
+ * Also defines Post subtypes to deserialize into based on the "type" attribute. 
  * @author Craig Walls
  */
-@JsonTypeInfo(use = Id.NAME, include = As.PROPERTY, property = "postType", visible = true)
-@JsonSubTypes({ @Type(name = "checkin", value = CheckinPost.class),
-        @Type(name = "link", value = LinkPost.class),
-        @Type(name = "note", value = NotePost.class),
-        @Type(name = "photo", value = PhotoPost.class),
-        @Type(name = "status", value = StatusPost.class),
-        @Type(name = "video", value = VideoPost.class),
-        @Type(name = "post", value = Post.class),
-        @Type(name = "swf", value = SwfPost.class),
-        @Type(name = "music", value = MusicPost.class) })
+@JsonTypeInfo(use=Id.NAME, include=As.PROPERTY, property="postType", visible=true)
+@JsonSubTypes({
+				@Type(name="checkin", value=CheckinPost.class),
+				@Type(name="link", value=LinkPost.class),
+				@Type(name="note", value=NotePost.class),
+				@Type(name="photo", value=PhotoPost.class),
+				@Type(name="status", value=StatusPost.class),
+				@Type(name="video", value=VideoPost.class),
+				@Type(name="post", value=Post.class),
+				@Type(name="swf", value=SwfPost.class),
+				@Type(name="music", value=MusicPost.class)
+				})
 @JsonIgnoreProperties(ignoreUnknown = true)
 abstract class PostMixin {
 
-    @JsonCreator
-    PostMixin(@JsonProperty("id") String id,
-            @JsonProperty("from") Reference from,
-            @JsonProperty("created_time") Date createdTime,
-            @JsonProperty("updated_time") Date updatedTime) {
-    }
+	@JsonCreator
+	PostMixin(
+			@JsonProperty("id") String id, 
+			@JsonProperty("from") Reference from, 
+			@JsonProperty("created_time") Date createdTime, 
+			@JsonProperty("updated_time") Date updatedTime) {}
 
-    @JsonProperty("to")
-    @JsonDeserialize(using = ReferenceListDeserializer.class)
-    List<Reference> to;
+	@JsonProperty("to")
+	@JsonDeserialize(using = ReferenceListDeserializer.class)
+	List<Reference> to;
 
-    @JsonProperty("message")
-    String message;
+	@JsonProperty("message")
+	String message;
 
-    @JsonProperty("caption")
-    String caption;
+	@JsonProperty("caption")
+	String caption;
 
-    @JsonProperty("picture")
-    @JsonDeserialize(using = PictureDeserializer.class)
-    String picture;
+	@JsonProperty("picture")
+	@JsonDeserialize(using=PictureDeserializer.class)
+	String picture;
 
-    @JsonProperty("link")
-    String link;
+	@JsonProperty("link")
+	String link;
 
-    @JsonProperty("subject")
-    String subject;
+	@JsonProperty("subject")
+	String subject;
 
-    @JsonProperty("name")
-    String name;
+	@JsonProperty("name")
+	String name;
 
-    @JsonProperty("description")
-    String description;
+	@JsonProperty("description")
+	String description;
 
-    @JsonProperty("icon")
-    String icon;
+	@JsonProperty("icon")
+	String icon;
 
-    @JsonProperty("application")
-    Reference application;
+	@JsonProperty("application")
+	Reference application;
 
-    @JsonProperty("type")
-    @JsonDeserialize(using = PostTypeDeserializer.class)
-    PostType type;
+	@JsonProperty("type")
+	@JsonDeserialize(using = TypeDeserializer.class)
+	PostType type;
 
-    // TODO: THIS IS BREAKING TYPE DESERIALIZATION...BUT WHY???
-    @JsonProperty("shares")
-    @JsonDeserialize(using = CountDeserializer.class)
-    int sharesCount;
+	// TODO: THIS IS BREAKING TYPE DESERIALIZATION...BUT WHY???
+	@JsonProperty("shares")
+	@JsonDeserialize(using = CountDeserializer.class)
+	int sharesCount;
 
-    @JsonProperty("likes")
-    @JsonDeserialize(using = ReferenceListAndCountDeserializer.class)
-    ListAndCount<Reference> likes;
+	@JsonProperty("likes")
+	@JsonDeserialize(using = ReferenceListAndCountDeserializer.class)
+	ListAndCount<Reference> likes;
 
-    @JsonProperty("comments")
-    @JsonDeserialize(using = CommentListAndCountDeserializer.class)
-    ListAndCount<Comment> comments;
+	@JsonProperty("comments")
+	@JsonDeserialize(using = CommentListAndCountDeserializer.class)
+	ListAndCount<Comment> comments;
 
-    @JsonProperty("story")
-    String story;
+	@JsonProperty("story")
+	String story;
 
-    @JsonProperty("story_tags")
-    @JsonDeserialize(using = StoryTagMapDeserializer.class)
-    Map<Integer, List<StoryTag>> storyTags;
+	@JsonProperty("story_tags")
+	@JsonDeserialize(using = StoryTagMapDeserializer.class)
+	Map<Integer,List<StoryTag>> storyTags;
 
-    @JsonProperty("actions")
-    @JsonDeserialize(using = ActionListDeserializer.class)
-    List<Action> actions;
+	private static class TypeDeserializer extends JsonDeserializer<PostType> {
+		@Override
+		public PostType deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+			return PostType.valueOf(jp.getText().toUpperCase());
+		}
+	}
 
-    private class PostTypeDeserializer extends JsonDeserializer<PostType> {
-        @Override
-        public PostType deserialize(JsonParser jp, DeserializationContext ctxt)
-                throws IOException, JsonProcessingException {
-            return PostType.valueOf(jp.getText().toUpperCase());
-        }
-    }
-
-    private static class CountDeserializer extends JsonDeserializer<Integer> {
-        @Override
-        public Integer deserialize(JsonParser jp, DeserializationContext ctxt)
-                throws IOException, JsonProcessingException {
-            Map map = jp.readValueAs(Map.class);
-            return map.containsKey("count") ? Integer.valueOf(String
-                    .valueOf(map.get("count"))) : 0;
-        }
-    }
+	private static class CountDeserializer extends JsonDeserializer<Integer> {
+		@Override
+		public Integer deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+			Map map = jp.readValueAs(Map.class);
+			return map.containsKey("count") ? Integer.valueOf(String.valueOf(map.get("count"))): 0; 
+		}
+	}
 }
