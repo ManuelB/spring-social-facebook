@@ -56,6 +56,7 @@ public class Post {
 	
 	private PostType type;
 	
+<<<<<<< HEAD
 	private ListAndCount<Reference> likes;
 	
 	private ListAndCount<Comment> comments;
@@ -65,6 +66,17 @@ public class Post {
 	private String story;
 	
 	private Map<Integer,List<StoryTag>> storyTags;
+=======
+	private int likeCount;
+
+	private List<Comment> comments;
+	
+	private List<Action> actions;
+	
+	public Post() {
+		this(null, null, null, null);
+	}
+>>>>>>> SOCIALFB-34 Deserialize List Return Values Properly
 
 	public Post(String id, Reference from, Date createdTime, Date updatedTime) {
 		this.id = id;
@@ -175,10 +187,21 @@ public class Post {
 		return storyTags;
 	}
 
+<<<<<<< HEAD
 	public int getCommentCount() {
 		return comments != null ? comments.getCount() : 0;
 	}
 	
+=======
+	public List<Action> getActions() {
+		return actions;
+	}
+
+	public void setActions(List<Action> actions) {
+		this.actions = actions;
+	}
+
+>>>>>>> SOCIALFB-34 Deserialize List Return Values Properly
 	public static enum PostType { POST, CHECKIN, LINK, NOTE, PHOTO, STATUS, VIDEO, SWF, MUSIC }
 	
 	public static enum Privacy { EVERYONE, ALL_FRIENDS, FRIENDS_OF_FRIENDS, CUSTOM, SELF };

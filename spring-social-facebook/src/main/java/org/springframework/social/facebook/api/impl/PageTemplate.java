@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.core.io.Resource;
 import org.springframework.social.facebook.api.Account;
 import org.springframework.social.facebook.api.FacebookLink;
@@ -26,17 +27,23 @@ import org.springframework.social.facebook.api.GraphApi;
 import org.springframework.social.facebook.api.Page;
 import org.springframework.social.facebook.api.PageAdministrationException;
 import org.springframework.social.facebook.api.PageOperations;
+<<<<<<< HEAD
 import org.springframework.social.facebook.api.PagedList;
+=======
+import org.springframework.social.facebook.api.Post;
+>>>>>>> SOCIALFB-34 Deserialize List Return Values Properly
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 class PageTemplate extends AbstractFacebookOperations implements PageOperations {
 
 	private final GraphApi graphApi;
+	private final ListDeserializer listDeserializer;
 
-	public PageTemplate(GraphApi graphApi, boolean isAuthorizedForUser) {
+	public PageTemplate(GraphApi graphApi, ObjectMapper objectMapper, boolean isAuthorizedForUser) {
 		super(isAuthorizedForUser);
 		this.graphApi = graphApi;
+		this.listDeserializer = new ListDeserializer(objectMapper);
 	}
 
 	public Page getPage(String pageId) {
@@ -53,6 +60,22 @@ class PageTemplate extends AbstractFacebookOperations implements PageOperations 
 		return graphApi.fetchConnections("me", "accounts", Account.class);
 	}
 
+<<<<<<< HEAD
+=======
+	@SuppressWarnings("unchecked")
+	public List<Post> getPosts(String pageId) {
+		requireAuthorization();
+		System.out.println( graphApi.fetchObject(pageId + "/posts", String.class));
+		Map<String, ?> map = graphApi.fetchObject(pageId + "/posts", Map.class);
+		return listDeserializer.deserializeList(map, Post.class);
+	}
+	
+	public Post getPost(String postId) {
+		requireAuthorization();
+		return graphApi.fetchObject(postId , Post.class);
+	}
+	
+>>>>>>> SOCIALFB-34 Deserialize List Return Values Properly
 	public String post(String pageId, String message) {
 		requireAuthorization();
 		String pageAccessToken = getPageAccessToken(pageId);

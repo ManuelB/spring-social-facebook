@@ -20,6 +20,24 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+<<<<<<< HEAD
+=======
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.JsonParser;
+import org.codehaus.jackson.JsonProcessingException;
+import org.codehaus.jackson.annotate.JsonCreator;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.annotate.JsonSubTypes;
+import org.codehaus.jackson.annotate.JsonSubTypes.Type;
+import org.codehaus.jackson.annotate.JsonTypeInfo;
+import org.codehaus.jackson.annotate.JsonTypeInfo.As;
+import org.codehaus.jackson.annotate.JsonTypeInfo.Id;
+import org.codehaus.jackson.map.DeserializationContext;
+import org.codehaus.jackson.map.JsonDeserializer;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
+import org.springframework.social.facebook.api.Action;
+>>>>>>> SOCIALFB-34 Deserialize List Return Values Properly
 import org.springframework.social.facebook.api.CheckinPost;
 import org.springframework.social.facebook.api.Comment;
 import org.springframework.social.facebook.api.LinkPost;
@@ -54,7 +72,11 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
  * Also defines Post subtypes to deserialize into based on the "type" attribute. 
  * @author Craig Walls
  */
+<<<<<<< HEAD
 @JsonTypeInfo(use=Id.NAME, include=As.PROPERTY, property="postType", visible=true)
+=======
+@JsonTypeInfo(use=Id.NAME, include=As.PROPERTY, property="type")
+>>>>>>> SOCIALFB-34 Deserialize List Return Values Properly
 @JsonSubTypes({
 				@Type(name="checkin", value=CheckinPost.class),
 				@Type(name="link", value=LinkPost.class),
@@ -109,7 +131,7 @@ abstract class PostMixin {
 	Reference application;
 	
 	@JsonProperty("type")
-	@JsonDeserialize(using = TypeDeserializer.class)
+	@JsonDeserialize(using = PostTypeDeserializer.class)
 	PostType type;
 
 	// TODO: THIS IS BREAKING TYPE DESERIALIZATION...BUT WHY???
@@ -122,6 +144,7 @@ abstract class PostMixin {
 	ListAndCount<Reference> likes;
 
 	@JsonProperty("comments")
+<<<<<<< HEAD
 	@JsonDeserialize(using = CommentListAndCountDeserializer.class)
 	ListAndCount<Comment> comments;
 
@@ -131,8 +154,16 @@ abstract class PostMixin {
 	@JsonProperty("story_tags")
 	@JsonDeserialize(using = StoryTagMapDeserializer.class)
 	Map<Integer,List<StoryTag>> storyTags;
+=======
+	@JsonDeserialize(using = CommentListDeserializer.class)
+	List<Comment> comments;
+	
+	@JsonProperty("actions")
+	@JsonDeserialize(using = ActionListDeserializer.class)
+	List<Action> actions;
+>>>>>>> SOCIALFB-34 Deserialize List Return Values Properly
 
-	private static class TypeDeserializer extends JsonDeserializer<PostType> {
+	private class PostTypeDeserializer extends JsonDeserializer<PostType> {
 		@Override
 		public PostType deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
 			return PostType.valueOf(jp.getText().toUpperCase());

@@ -50,7 +50,27 @@ public interface PageOperations {
 	 * Retrieves a list of Account objects for the pages that the authenticated user is an administrator.
 	 * Requires "manage_pages" permission.
 	 */
+<<<<<<< HEAD
 	PagedList<Account> getAccounts();
+=======
+	List<Account> getAccounts();
+	
+	/**
+	 * Retrieves a list of Post objects for the given page ID.
+	 * 
+	 * @param pageId the page ID
+	 * @return a list of Post objects
+	 */
+	List<Post> getPosts(String pageId);
+>>>>>>> SOCIALFB-34 Deserialize List Return Values Properly
+	
+	/**
+	 * Retrieves a Post object for the given post ID.
+	 * 
+	 * @param pageId the post ID
+	 * @return a Post object
+	 */
+	Post getPost(String postId);
 	
 	/**
 	 * Posts a message to a page's feed as a page administrator.

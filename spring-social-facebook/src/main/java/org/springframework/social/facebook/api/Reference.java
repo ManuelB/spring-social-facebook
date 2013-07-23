@@ -27,6 +27,12 @@ public class Reference implements Serializable {
 	private final String id;
 
 	private final String name;
+	
+	private String category;
+	
+	public Reference() {
+		this(null);
+	}
 
 	public Reference(String id) {
 		this(id, null);
@@ -43,6 +49,14 @@ public class Reference implements Serializable {
 
 	public String getName() {
 		return name;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 }
