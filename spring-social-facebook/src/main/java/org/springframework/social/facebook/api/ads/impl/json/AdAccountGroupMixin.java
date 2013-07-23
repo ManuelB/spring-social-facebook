@@ -13,20 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.social.facebook.api.ads;
+package org.springframework.social.facebook.api.ads.impl.json;
 
-import org.springframework.social.facebook.api.ConnectionOperations;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 
 /**
  * @author Karthick Sankarachary
  */
-public interface AccountGroupOperations extends ConnectionOperations {
-	public AdAccountGroup getAccountGroup(String accountGroupId);
+@JsonIgnoreProperties(ignoreUnknown = true)
+abstract class AdAccountGroupMixin {
 
-	public Id createAccountGroup(AdAccountGroup accountGroup);
+	@JsonCreator
+	AdAccountGroupMixin() {
+	}
 
-	public boolean updateAccountGroup(String accountGroupId,
-			AdAccountGroup accountGroup);
-
-	public boolean deleteAccountGroup(String accountGroupId);
 }

@@ -18,17 +18,10 @@ package org.springframework.social.facebook.api.ads.impl;
 import java.util.List;
 
 import org.springframework.social.facebook.api.GraphApi;
-<<<<<<< HEAD
+import org.springframework.social.facebook.api.Identifier;
 import org.springframework.social.facebook.api.ads.AdGroup;
 import org.springframework.social.facebook.api.ads.AdGroupOperations;
 import org.springframework.social.facebook.api.ads.Id;
-import org.springframework.social.facebook.api.ads.ResultSet;
-=======
-import org.springframework.social.facebook.api.Identifier;
-import org.springframework.social.facebook.api.ResultSet;
-import org.springframework.social.facebook.api.ads.AdGroup;
-import org.springframework.social.facebook.api.ads.AdGroupOperations;
->>>>>>> SOCIALFB-34 Deserialize List Return Values Properly
 import org.springframework.social.facebook.api.ads.Stats;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -47,12 +40,11 @@ class AdGroupTemplate extends AbstractAdsOperations implements
 
 	@Override
 	public String[] getConnectionTypes() {
-		return new String[] { "adaccount", "adgroup" };
+		return new String[] { "adaccount" };
 	}
 
 	public List<AdGroup> getAdGroups(String accountId) {
 		requireAuthorization();
-		System.out.println( getConnections(getAccountId(accountId), AdGroup.class));
 		return getConnections(getAccountId(accountId), AdGroup.class);
 	}
 
@@ -84,41 +76,6 @@ class AdGroupTemplate extends AbstractAdsOperations implements
 		return Boolean.valueOf(status);
 	}
 
-	public Stats getAdGroupStats(String adGroupId, long startTime, long endTime) {
-		requireAuthorization();
-		MultiValueMap<String, String> vars = new LinkedMultiValueMap<String, String>();
-		vars.set("start_time", String.valueOf(startTime));
-		vars.set("end_time", String.valueOf(endTime));
-		return graphApi.fetchObject(getPath(adGroupId, "stats"), Stats.class,
-				vars);
-	}
-
-	public List<Stats> getAdGroupsStats(List<String> adGroupIds,
-			long startTime, long endTime) {
-		requireAuthorization();
-		MultiValueMap<String, String> parameters = new LinkedMultiValueMap<String, String>();
-		parameters.set("start_time", String.valueOf(startTime));
-		parameters.set("end_time", String.valueOf(endTime));
-		parameters.set("ids", join(adGroupIds));
-		parameters.set("stats", "");
-		@SuppressWarnings("unchecked")
-		ResultSet<Stats> resultSet = graphApi.fetchObject("", ResultSet.class);
-		return resultSet.getData();
-	}
-
-	public List<Stats> getAdGroupsStats(String accountId, long startTime,
-			long endTime) {
-		requireAuthorization();
-		MultiValueMap<String, String> parameters = new LinkedMultiValueMap<String, String>();
-		parameters.set("start_time", String.valueOf(startTime));
-		parameters.set("end_time", String.valueOf(endTime));
-		@SuppressWarnings("unchecked")
-		ResultSet<Stats> resultSet = graphApi.fetchObject(
-				getPath(getAccountId(accountId), "adgroupstats"),
-				ResultSet.class);
-		return resultSet.getData();
-	}
-
 	private MultiValueMap<String, Object> getAdGroupData(AdGroup adGroup) {
 		MultiValueMap<String, Object> data = new LinkedMultiValueMap<String, Object>();
 		data.set("ad_id", adGroup.getAdId());
@@ -138,5 +95,22 @@ class AdGroupTemplate extends AbstractAdsOperations implements
 				adGroup.getDisapproveReasonDescriptions());
 		return data;
 	}
+
+    public Stats getAdGroupStats(String adGroupId, long startTime, long endTime) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public List<Stats> getAdGroupsStats(List<String> adGroupIds,
+            long startTime, long endTime) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public List<Stats> getAdGroupsStats(String accountId, long startTime,
+            long endTime) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
 }

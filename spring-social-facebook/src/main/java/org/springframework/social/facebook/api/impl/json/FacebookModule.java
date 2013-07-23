@@ -28,11 +28,8 @@ import org.springframework.social.facebook.api.FacebookProfile;
 import org.springframework.social.facebook.api.FamilyMember;
 import org.springframework.social.facebook.api.Group;
 import org.springframework.social.facebook.api.GroupMemberReference;
-<<<<<<< HEAD
 import org.springframework.social.facebook.api.GroupMembership;
-=======
 import org.springframework.social.facebook.api.Identifier;
->>>>>>> SOCIALFB-34 Deserialize List Return Values Properly
 import org.springframework.social.facebook.api.Invitation;
 import org.springframework.social.facebook.api.LinkPost;
 import org.springframework.social.facebook.api.Location;
@@ -100,15 +97,12 @@ public class FacebookModule extends SimpleModule {
 		context.setMixInAnnotations(Account.class, AccountMixin.class);
 		context.setMixInAnnotations(SwfPost.class, SwfPostMixin.class);
 		context.setMixInAnnotations(MusicPost.class, MusicPostMixin.class);
-<<<<<<< HEAD
 		context.setMixInAnnotations(GroupMembership.class, GroupMembershipMixin.class);
 		context.setMixInAnnotations(FamilyMember.class, FamilyMemberMixin.class);
 		context.setMixInAnnotations(Question.class, QuestionMixin.class);
 		context.setMixInAnnotations(QuestionOption.class, QuestionOptionMixin.class);
 		context.setMixInAnnotations(StoryTag.class, StoryTagMixin.class);
 		context.setMixInAnnotations(CoverPhoto.class, CoverPhotoMixin.class);
-=======
 		context.setMixInAnnotations(Identifier.class, IdentifierMixin.class);
->>>>>>> SOCIALFB-34 Deserialize List Return Values Properly
 	}
 }

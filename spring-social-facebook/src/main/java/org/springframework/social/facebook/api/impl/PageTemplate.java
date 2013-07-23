@@ -19,7 +19,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.core.io.Resource;
 import org.springframework.social.facebook.api.Account;
 import org.springframework.social.facebook.api.FacebookLink;
@@ -27,13 +26,12 @@ import org.springframework.social.facebook.api.GraphApi;
 import org.springframework.social.facebook.api.Page;
 import org.springframework.social.facebook.api.PageAdministrationException;
 import org.springframework.social.facebook.api.PageOperations;
-<<<<<<< HEAD
 import org.springframework.social.facebook.api.PagedList;
-=======
 import org.springframework.social.facebook.api.Post;
->>>>>>> SOCIALFB-34 Deserialize List Return Values Properly
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 class PageTemplate extends AbstractFacebookOperations implements PageOperations {
 
@@ -60,8 +58,6 @@ class PageTemplate extends AbstractFacebookOperations implements PageOperations 
 		return graphApi.fetchConnections("me", "accounts", Account.class);
 	}
 
-<<<<<<< HEAD
-=======
 	@SuppressWarnings("unchecked")
 	public List<Post> getPosts(String pageId) {
 		requireAuthorization();
@@ -75,7 +71,6 @@ class PageTemplate extends AbstractFacebookOperations implements PageOperations 
 		return graphApi.fetchObject(postId , Post.class);
 	}
 	
->>>>>>> SOCIALFB-34 Deserialize List Return Values Properly
 	public String post(String pageId, String message) {
 		requireAuthorization();
 		String pageAccessToken = getPageAccessToken(pageId);

@@ -23,7 +23,6 @@ import org.springframework.social.facebook.api.ads.AdGroupOperations;
 import org.springframework.social.facebook.api.ads.CampaignOperations;
 import org.springframework.social.facebook.api.ads.CreativeOperations;
 import org.springframework.social.facebook.api.ads.FacebookAds;
-import org.springframework.social.facebook.api.ads.SearchOperations;
 import org.springframework.social.facebook.api.ads.impl.json.FacebookAdsModule;
 import org.springframework.social.facebook.api.impl.FacebookTemplate;
 
@@ -37,7 +36,6 @@ public class FacebookAdsTemplate extends FacebookTemplate implements
 	private CampaignOperations campaignOperations;
 	private CreativeOperations creativeOperations;
 	private AdGroupOperations adGroupOperations;
-	private SearchOperations searchOperations;
 
 	public FacebookAdsTemplate() {
 		super();
@@ -61,7 +59,6 @@ public class FacebookAdsTemplate extends FacebookTemplate implements
 		creativeOperations = new CreativeTemplate(this, isAuthorized());
 		adGroupOperations = new AdGroupTemplate(this, getRestTemplate(),
 				isAuthorized());
-		searchOperations = new SearchTemplate(this, objectMapper, isAuthorized());
 	}
 
 	public AccountOperations accountOperations() {
@@ -83,11 +80,6 @@ public class FacebookAdsTemplate extends FacebookTemplate implements
 	public AdGroupOperations adGroupOperations() {
 		return adGroupOperations;
 	}
-
-	//@Override
-	//public SearchOperations searchOperations() {
-	//	return searchOperations;
-	//}
 
 	@Override
 	protected MappingJackson2HttpMessageConverter getJsonMessageConverter() {

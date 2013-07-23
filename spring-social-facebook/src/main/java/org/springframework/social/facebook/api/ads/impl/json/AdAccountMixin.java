@@ -15,35 +15,51 @@
  */
 package org.springframework.social.facebook.api.ads.impl.json;
 
+import java.util.List;
+
+import org.springframework.social.facebook.api.ads.AccountStatus;
+import org.springframework.social.facebook.api.ads.AdAccountGroup;
+import org.springframework.social.facebook.api.ads.User;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /**
  * @author Karthick Sankarachary
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-abstract class EstimationMixin {
+abstract class AdAccountMixin {
 
 	@JsonCreator
-	EstimationMixin() {
+	AdAccountMixin() {
 	}
 
-	@JsonProperty("cpc_min")
-	int cpcMin;
+	@JsonProperty("account_id")
+	long accountId;
+	
+	@JsonProperty("account_status")
+	@JsonDeserialize(using=AccountStatusDeserializer.class)
+	AccountStatus accountStatus;
 
-	@JsonProperty("cpc_median")
-	int cpcMedian;
-
-	@JsonProperty("cpc_max")
-	int cpcMax;
-
-	@JsonProperty("cpm_min")
-	int cpmMin;
-
-	@JsonProperty("cpm_median")
-	int cpmMedian;
-
-	@JsonProperty("cpm_max")
-	int cpmMax;
+	@JsonProperty("daily_spend_limit")
+	int dailySpendLimit;
+	
+	@JsonProperty("timezone_id")
+	int timezoneId;
+	
+	@JsonProperty("timezone_name")
+	String timezoneName;
+	
+	@JsonIgnore
+	abstract List<Object> getCapabilities();
+	
+	@JsonProperty("account_groups")
+	List<AdAccountGroup> accountGroups;
+	
+	@JsonProperty("users")
+	@JsonDeserialize(using=UserListDeserializer.class)
+	List<User> users;
 }

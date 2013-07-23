@@ -18,19 +18,10 @@ package org.springframework.social.facebook.api.ads.impl;
 import java.util.List;
 
 import org.springframework.social.facebook.api.GraphApi;
-<<<<<<< HEAD
-import org.springframework.social.facebook.api.ads.AdCampaign;
-import org.springframework.social.facebook.api.ads.AdCampaignList;
-import org.springframework.social.facebook.api.ads.CampaignOperations;
-import org.springframework.social.facebook.api.ads.Id;
-import org.springframework.social.facebook.api.ads.ResultSet;
-=======
 import org.springframework.social.facebook.api.Identifier;
-import org.springframework.social.facebook.api.ResultSet;
 import org.springframework.social.facebook.api.ads.AdCampaign;
 import org.springframework.social.facebook.api.ads.AdCampaignList;
 import org.springframework.social.facebook.api.ads.CampaignOperations;
->>>>>>> SOCIALFB-34 Deserialize List Return Values Properly
 import org.springframework.social.facebook.api.ads.Stats;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -51,24 +42,11 @@ class CampaignTemplate extends AbstractAdsOperations implements
 
 	public List<AdCampaign> getCampaigns(String accountId) {
 		requireAuthorization();
-		AdCampaignList resultSet = graphApi.fetchObject(getAccountId(accountId)
-				+ "/adcampaigns", AdCampaignList.class);
-		return resultSet.getData();
-	}
-
-	public List<AdCampaign> getCampaigns(
-			List<String> campaignIds, MultiValueMap<String, String> vars) {
-		requireAuthorization();
-		vars.set("ids", join(campaignIds));
-		AdCampaignList resultSet = graphApi.fetchObject("", AdCampaignList.class, vars);
-		return resultSet.getData();
-	}
+		System.out.println( graphApi.fetchObject(getAccountId(accountId) + "/adcampaigns",
+				String.class));
 	
-	public List<AdCampaign> getCampaigns(String accountId,
-			List<String> campaignIds, MultiValueMap<String, String> vars) {
-		requireAuthorization();
-		AdCampaignList resultSet = graphApi.fetchObject(getAccountId(accountId)
-				+ "/adcampaigns", AdCampaignList.class, vars);
+		AdCampaignList resultSet = graphApi.fetchObject(getAccountId(accountId) + "/adcampaigns",
+				AdCampaignList.class);
 		return resultSet.getData();
 	}
 
@@ -77,39 +55,14 @@ class CampaignTemplate extends AbstractAdsOperations implements
 		return graphApi.fetchObject(campaignId, AdCampaign.class);
 	}
 
-	public List<Stats> getCampaignsStats(String accountId, long startTime,
-			long endTime) {
+	public Stats getCampaignStats(String accountId, long startTime, long endTime) {
 		requireAuthorization();
 		MultiValueMap<String, String> parameters = new LinkedMultiValueMap<String, String>();
 		parameters.set("start_time", String.valueOf(startTime));
 		parameters.set("end_time", String.valueOf(endTime));
-		@SuppressWarnings("unchecked")
-		ResultSet<Stats> resultSet = graphApi.fetchObject(
+		return graphApi.fetchObject(
 				getPath(getAccountId(accountId), "adcampaignstats"),
-				ResultSet.class);
-		return resultSet.getData();
-	}
-
-	public List<Stats> getCampaignsStats(List<String> campaignIds,
-			long startTime, long endTime) {
-		requireAuthorization();
-		MultiValueMap<String, String> parameters = new LinkedMultiValueMap<String, String>();
-		parameters.set("start_time", String.valueOf(startTime));
-		parameters.set("end_time", String.valueOf(endTime));
-		parameters.set("ids", join(campaignIds));
-		parameters.set("stats", "");
-		@SuppressWarnings("unchecked")
-		ResultSet<Stats> resultSet = graphApi.fetchObject("", ResultSet.class);
-		return resultSet.getData();
-	}
-
-	public Stats getCampaignStats(String campaignId, long startTime,
-			long endTime) {
-		requireAuthorization();
-		MultiValueMap<String, String> parameters = new LinkedMultiValueMap<String, String>();
-		parameters.set("start_time", String.valueOf(startTime));
-		parameters.set("end_time", String.valueOf(endTime));
-		return graphApi.fetchObject(getPath(campaignId, "stats"), Stats.class);
+				Stats.class);
 	}
 
 	public Identifier createCampaign(String accountId, AdCampaign campaign) {
@@ -143,4 +96,22 @@ class CampaignTemplate extends AbstractAdsOperations implements
 		String status = graphApi.delete(campaignId);
 		return Boolean.valueOf(status);
 	}
+
+    public List<AdCampaign> getCampaigns(List<String> campaignIds,
+            MultiValueMap<String, String> vars) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public List<Stats> getCampaignsStats(String accountId, long startTime,
+            long endTime) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public List<Stats> getCampaignsStats(List<String> campaignIds,
+            long startTime, long endTime) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

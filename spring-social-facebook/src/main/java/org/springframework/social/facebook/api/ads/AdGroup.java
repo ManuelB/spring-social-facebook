@@ -15,7 +15,6 @@
  */
 package org.springframework.social.facebook.api.ads;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,10 +30,10 @@ public class AdGroup {
 	private Targeting targeting;
 	private AdCreative creative;
 	private long adGroupId;
-	private Date endTime;
-	private Date startTime;
-	private Date updatedTime;
-	private BidInfo bidInfo;
+	private int endTime;
+	private int startTime;
+	private int updatedTime;
+	private List<String> bidInfo;
 	private List<String> disapproveReasonDescriptions;
 
 	public long getAdId() {
@@ -109,35 +108,35 @@ public class AdGroup {
 		this.adGroupId = adGroupId;
 	}
 
-	public Date getEndTime() {
+	public int getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(Date endTime) {
+	public void setEndTime(int endTime) {
 		this.endTime = endTime;
 	}
 
-	public Date getStartTime() {
+	public int getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(Date startTime) {
+	public void setStartTime(int startTime) {
 		this.startTime = startTime;
 	}
 
-	public Date getUpdatedTime() {
+	public int getUpdatedTime() {
 		return updatedTime;
 	}
 
-	public void setUpdatedTime(Date updatedTime) {
+	public void setUpdatedTime(int updatedTime) {
 		this.updatedTime = updatedTime;
 	}
 
-	public BidInfo getBidInfo() {
+	public List<String> getBidInfo() {
 		return bidInfo;
 	}
 
-	public void setBidInfo(BidInfo bidInfo) {
+	public void setBidInfo(List<String> bidInfo) {
 		this.bidInfo = bidInfo;
 	}
 

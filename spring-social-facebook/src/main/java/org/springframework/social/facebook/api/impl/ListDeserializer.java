@@ -21,8 +21,6 @@ import java.util.Map;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.TypeFactory;
->>>>>>> SOCIALFB-34 Deserialize List Return Values Properly
 
 /**
  * Strategy interface for deserializing lists of data returned from Facebook as

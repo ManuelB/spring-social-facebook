@@ -18,20 +18,21 @@ package org.springframework.social.facebook.api.impl.json;
 import java.io.IOException;
 import java.util.List;
 
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.JsonParser;
-import org.codehaus.jackson.JsonProcessingException;
-import org.codehaus.jackson.map.DeserializationContext;
-import org.codehaus.jackson.map.JsonDeserializer;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.TypeReference;
 import org.springframework.social.facebook.api.Comment;
+
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 class KeywordListDeserializer extends JsonDeserializer<List<Comment>> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Comment> deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
-		ObjectMapper mapper = new ObjectMapper();
+		/*ObjectMapper mapper = new ObjectMapper();
 		mapper.setDeserializationConfig(ctxt.getConfig());
 		jp.setCodec(mapper);
 		if(jp.hasCurrentToken()) {
@@ -39,7 +40,7 @@ class KeywordListDeserializer extends JsonDeserializer<List<Comment>> {
 			if(dataNode != null) {
 				return (List<Comment>) mapper.readValue(dataNode, new TypeReference<List<Comment>>() {});
 			}
-		}
+		}*/
 		
 		return null;
 	}

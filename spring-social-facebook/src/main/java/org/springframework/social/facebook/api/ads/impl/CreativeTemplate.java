@@ -18,9 +18,9 @@ package org.springframework.social.facebook.api.ads.impl;
 import java.util.List;
 
 import org.springframework.social.facebook.api.GraphApi;
-import org.springframework.social.facebook.api.Identifier;
 import org.springframework.social.facebook.api.ads.AdCreative;
 import org.springframework.social.facebook.api.ads.CreativeOperations;
+import org.springframework.social.facebook.api.ads.Id;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
@@ -49,11 +49,11 @@ class CreativeTemplate extends AbstractAdsOperations implements
 		return graphApi.fetchObject(creativeId, AdCreative.class);
 	}
 
-	public Identifier createCreative(String accountId, AdCreative creative) {
+	public Id createCreative(String accountId, AdCreative creative) {
 		requireAuthorization();
 		String id = graphApi.publish(getAccountId(accountId), "adcreatives",
 				getCreativeData(creative));
-		return new Identifier(id);
+		return new Id(id);
 	}
 
 	public boolean updateCreative(String creativeId, AdCreative creative) {
@@ -65,11 +65,6 @@ class CreativeTemplate extends AbstractAdsOperations implements
 		requireAuthorization();
 		String status = graphApi.delete(creativeId);
 		return Boolean.valueOf(status);
-	}
-	
-	public String getStory(String storyId) {
-		requireAuthorization();
-		return graphApi.fetchObject(storyId, String.class);
 	}
 
 	private MultiValueMap<String, Object> getCreativeData(AdCreative creative) {
@@ -88,4 +83,5 @@ class CreativeTemplate extends AbstractAdsOperations implements
 		data.set("related_fan_page", creative.getRelatedFanPage());
 		return data;
 	}
+
 }

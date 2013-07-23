@@ -19,7 +19,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.social.facebook.api.GraphApi;
+import org.springframework.social.facebook.api.Identifier;
 import org.springframework.social.facebook.api.ads.SearchOperations;
+import org.springframework.social.facebook.api.ads.ValidKeyword;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
@@ -57,5 +59,25 @@ public class SearchTemplate extends AbstractFacebookOperations implements
 		Map<String, ?> map = graphApi.fetchObject("search", Map.class, vars);
 		return listDeserializer.deserializeList(map, itemType);
 	}
+
+    public Identifier getIdByUrl(String url) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public List<Identifier> getKeywordAutocomplete(String keyword) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public List<Identifier> getKeywordSuggestions(String... keyword) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public List<ValidKeyword> getValidKeywords(String... keywords) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
 }

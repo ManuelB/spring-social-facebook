@@ -15,35 +15,45 @@
  */
 package org.springframework.social.facebook.api.ads.impl.json;
 
+import java.util.List;
+
+import org.springframework.social.facebook.api.ads.Name;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /**
  * @author Karthick Sankarachary
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-abstract class EstimationMixin {
+abstract class TargetingMixin {
 
 	@JsonCreator
-	EstimationMixin() {
+	TargetingMixin() {
 	}
-
-	@JsonProperty("cpc_min")
-	int cpcMin;
-
-	@JsonProperty("cpc_median")
-	int cpcMedian;
-
-	@JsonProperty("cpc_max")
-	int cpcMax;
-
-	@JsonProperty("cpm_min")
-	int cpmMin;
-
-	@JsonProperty("cpm_median")
-	int cpmMedian;
-
-	@JsonProperty("cpm_max")
-	int cpmMax;
+	
+	@JsonProperty("countries")
+	List<String> countries;
+	
+	@JsonProperty("genders")
+	List<Integer> genders;
+	
+	@JsonProperty("relationship_statuses")
+	List<Integer> relationshipStatuses;
+	
+	@JsonProperty("age_min")
+	int ageMin;
+	
+	@JsonProperty("age_max")
+	int ageMax;
+	
+	@JsonProperty("cities")
+	@JsonDeserialize(using=CitiesListDeserializer.class)
+	List<Name> cities;
+	
+	@JsonProperty("regions")
+	@JsonDeserialize(using=RegionsListDeserializer.class)
+	List<Name> regions;
 }

@@ -20,7 +20,7 @@ import java.util.List;
 import org.springframework.social.MissingAuthorizationException;
 
 public class AbstractFacebookOperations {
-
+	
 	private final boolean isAuthorized;
 
 	public AbstractFacebookOperations(boolean isAuthorized) {

@@ -21,7 +21,6 @@ import java.util.List;
 /**
  * @author Karthick Sankarachary
  */
-<<<<<<< HEAD:spring-social-facebook/src/main/java/org/springframework/social/facebook/api/ads/AdGroupList.java
 @SuppressWarnings("serial")
 public class AdGroupList extends ArrayList<AdGroup> {
 	public AdGroupList() {
@@ -32,13 +31,4 @@ public class AdGroupList extends ArrayList<AdGroup> {
 		super(adGroups);
 	}
 
-=======
-public interface SearchOperations {
-	public <T> List<T> search(String type, String query,
-			Class<T> itemType);
-
-	public <T> List<T> search(String type, String query,
-			MultiValueMap<String, String> vars, 
-			Class<T> itemType);
->>>>>>> SOCIALFB-34 Deserialize List Return Values Properly:spring-social-facebook/src/main/java/org/springframework/social/facebook/api/SearchOperations.java
 }

@@ -16,11 +16,6 @@
 package org.springframework.social.facebook.api.ads;
 
 import java.util.List;
-<<<<<<< HEAD
-=======
-
-import org.springframework.social.facebook.api.Identifier;
->>>>>>> SOCIALFB-34 Deserialize List Return Values Properly
 
 /**
  * @author Karthick Sankarachary
@@ -30,11 +25,9 @@ public interface CreativeOperations {
 
 	public AdCreative getCreative(String creativeId);
 
-	public Identifier createCreative(String accountId, AdCreative creative);
+	public Id createCreative(String creativeId, AdCreative creative);
 
 	public boolean updateCreative(String creativeId, AdCreative creative);
 
 	public boolean deleteCreative(String creativeId);
-	
-	public String getStory(String storyId);
 }

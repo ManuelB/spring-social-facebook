@@ -18,32 +18,51 @@ package org.springframework.social.facebook.api.ads.impl.json;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.deser.std.DateDeserializers.DateDeserializer;
 
 /**
  * @author Karthick Sankarachary
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-abstract class EstimationMixin {
+abstract class StatsMixin {
 
 	@JsonCreator
-	EstimationMixin() {
+	StatsMixin() {
 	}
+	
+	@JsonProperty("account_id")
+	long accountId;
 
-	@JsonProperty("cpc_min")
-	int cpcMin;
+	@JsonProperty("start_time")
+	@JsonDeserialize(using=DateDeserializer.class)
+	int startTime;
 
-	@JsonProperty("cpc_median")
-	int cpcMedian;
+	@JsonProperty("end_time")
+	@JsonDeserialize(using=DateDeserializer.class)
+	int endTime;
 
-	@JsonProperty("cpc_max")
-	int cpcMax;
+	@JsonProperty("campaign_id")
+	long campaignId;
 
-	@JsonProperty("cpm_min")
-	int cpmMin;
+	@JsonProperty("social_impressions")
+	int socialImpressions;
 
-	@JsonProperty("cpm_median")
-	int cpmMedian;
+	@JsonProperty("social_clicks")
+	int socialClicks;
 
-	@JsonProperty("cpm_max")
-	int cpmMax;
+	@JsonProperty("social_spent")
+	int socialSpent;
+
+	@JsonProperty("unique_impressions")
+	int uniqueImpressions;
+
+	@JsonProperty("social_unique_impressions")
+	int socialUniqueImpressions;
+
+	@JsonProperty("unique_clicks")
+	int uniqueClicks;
+
+	@JsonProperty("social_unique_clicks")
+	int socialUniqueClicks;
 }

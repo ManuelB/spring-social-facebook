@@ -103,6 +103,8 @@ public class FacebookTemplate extends AbstractOAuth2ApiBinding implements Facebo
 
 	private String applicationNamespace;
 
+    private SearchTemplate searchOperations;
+
 	/**
 	 * Create a new instance of FacebookTemplate.
 	 * This constructor creates a new FacebookTemplate able to perform unauthenticated operations against Facebook's Graph API.
@@ -339,14 +341,10 @@ public class FacebookTemplate extends AbstractOAuth2ApiBinding implements Facebo
 		eventOperations = new EventTemplate(this, isAuthorized());
 		mediaOperations = new MediaTemplate(this, getRestTemplate(), isAuthorized());
 		groupOperations = new GroupTemplate(this, isAuthorized());
-<<<<<<< HEAD
-		pageOperations = new PageTemplate(this, isAuthorized());
+		pageOperations = new PageTemplate(this, objectMapper, isAuthorized());
 		fqlOperations = new FqlTemplate(this, isAuthorized());
 		questionOperations = new QuestionTemplate(this, isAuthorized());
-=======
-		pageOperations = new PageTemplate(this, objectMapper, isAuthorized());
 		searchOperations = new SearchTemplate(this, objectMapper, isAuthorized());
->>>>>>> SOCIALFB-34 Deserialize List Return Values Properly
 	}
 	
 	@SuppressWarnings("unchecked")

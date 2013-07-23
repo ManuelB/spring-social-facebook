@@ -27,7 +27,7 @@ import java.util.Map;
  * @author Craig Walls
  */
 public class Post {
-	
+
 	private final String id;
 
 	private final Reference from;
@@ -37,46 +37,34 @@ public class Post {
 	private final Date updatedTime;
 
 	private List<Reference> to;
-	
-	private String message;
-	
-	private String picture;
-	
-	private String link;
-		
-	private String name;
-	
-	private String caption;
-	
-	private String description;
-	
-	private String icon;
-	
-	private Reference application;
-	
-	private PostType type;
-	
-<<<<<<< HEAD
-	private ListAndCount<Reference> likes;
-	
-	private ListAndCount<Comment> comments;
-	
-	private int sharesCount;
-	
-	private String story;
-	
-	private Map<Integer,List<StoryTag>> storyTags;
-=======
-	private int likeCount;
 
-	private List<Comment> comments;
-	
-	private List<Action> actions;
-	
-	public Post() {
-		this(null, null, null, null);
-	}
->>>>>>> SOCIALFB-34 Deserialize List Return Values Properly
+	private String message;
+
+	private String picture;
+
+	private String link;
+
+	private String name;
+
+	private String caption;
+
+	private String description;
+
+	private String icon;
+
+	private Reference application;
+
+	private PostType type;
+
+	private ListAndCount<Reference> likes;
+
+	private ListAndCount<Comment> comments;
+
+	private int sharesCount;
+
+	private String story;
+
+	private Map<Integer,List<StoryTag>> storyTags;
 
 	public Post(String id, Reference from, Date createdTime, Date updatedTime) {
 		this.id = id;
@@ -145,7 +133,7 @@ public class Post {
 	public PostType getType() {
 		return type;
 	}
-	
+
 	/**
 	 * Reference for users who have liked this Post. 
 	 * May not be a complete list and the size may be different than the value returned from getLikeCount().
@@ -155,7 +143,7 @@ public class Post {
 	public List<Reference> getLikes() {
 		return likes != null ? likes.getList() : null;
 	}
-	
+
 	/**
 	 * The number of likes for this Post. May be different than the size of the list returned from getLikes().
 	 * @return the number of likes for the Post or null if no like information is available.
@@ -163,7 +151,7 @@ public class Post {
 	public Integer getLikeCount() {
 		return likes != null ? likes.getCount() : null;
 	}
-	
+
 	public int getSharesCount() {
 		return sharesCount;
 	}
@@ -178,32 +166,21 @@ public class Post {
 			return Collections.emptyList();
 		}
 	}
-	
+
 	public String getStory() {
 		return story;
 	}
-	
+
 	public Map<Integer,List<StoryTag>> getStoryTags() {
 		return storyTags;
 	}
 
-<<<<<<< HEAD
 	public int getCommentCount() {
 		return comments != null ? comments.getCount() : 0;
 	}
-	
-=======
-	public List<Action> getActions() {
-		return actions;
-	}
 
-	public void setActions(List<Action> actions) {
-		this.actions = actions;
-	}
-
->>>>>>> SOCIALFB-34 Deserialize List Return Values Properly
 	public static enum PostType { POST, CHECKIN, LINK, NOTE, PHOTO, STATUS, VIDEO, SWF, MUSIC }
-	
+
 	public static enum Privacy { EVERYONE, ALL_FRIENDS, FRIENDS_OF_FRIENDS, CUSTOM, SELF };
-	
+
 }

@@ -23,8 +23,6 @@ import org.springframework.social.facebook.api.ConnectionOperations;
  * @author Karthick Sankarachary
  */
 public interface AccountOperations extends ConnectionOperations {
-	public List<AdAccount> getAccounts(String userId);
-	
 	public AdAccount getAccount(String accountId);
 
 	public List<User> getAccountUsers(String accountId);
@@ -34,6 +32,6 @@ public interface AccountOperations extends ConnectionOperations {
 	public <T> List<Stats> getAccountConnectionStats(String accountId,
 			Class<T> connectionType);
 
-	public ReachEstimate getReachEstimate(String accountId, String currency,
+	public long getReachEstimate(String accountId, String currency,
 			Targeting targetingSpec);
 }

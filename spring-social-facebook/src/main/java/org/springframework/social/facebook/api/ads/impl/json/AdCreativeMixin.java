@@ -23,27 +23,37 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author Karthick Sankarachary
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-abstract class EstimationMixin {
+abstract class AdCreativeMixin {
 
-	@JsonCreator
-	EstimationMixin() {
-	}
+    @JsonCreator
+    AdCreativeMixin() {
+    }
 
-	@JsonProperty("cpc_min")
-	int cpcMin;
+    @JsonProperty("object_id")
+    int objectId;
 
-	@JsonProperty("cpc_median")
-	int cpcMedian;
+    @JsonProperty("image_hash")
+    String imageHash;
 
-	@JsonProperty("cpc_max")
-	int cpcMax;
+    @JsonProperty("image_url")
+    String imageUrl;
 
-	@JsonProperty("cpm_min")
-	int cpmMin;
+    @JsonProperty("creative_id")
+    int creativeId;
 
-	@JsonProperty("cpm_median")
-	int cpmMedian;
+    @JsonProperty("count_current_adgroups")
+    String countCurrentAdGroups;
 
-	@JsonProperty("cpm_max")
-	int cpmMax;
+    @JsonProperty("run_status")
+    String runStatus;
+
+    @JsonProperty("link_url")
+    String linkUrl;
+
+    @JsonProperty("preview_url")
+    String previewUrl;
+
+    @JsonProperty("related_fan_page")
+    String relatedFanPage;
+
 }
