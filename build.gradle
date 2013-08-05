@@ -36,6 +36,7 @@ configure(allprojects) {
     test.systemProperty("java.awt.headless", "true")
 
     repositories {
+        mavenCentral()
         maven { url "http://repo.springsource.org/libs-snapshot" }
     }
 
@@ -89,6 +90,31 @@ configure(subprojects) { subproject ->
     artifacts {
         archives sourcesJar
         archives javadocJar
+    }
+    apply plugin: 'java'
+    apply plugin: 'maven'
+
+
+    configurations {
+        deployerJars
+    }
+
+    dependencies {
+        deployerJars "org.apache.maven.wagon:wagon-webdav-jackrabbit:1.0-beta-7"
+    }
+
+    uploadArchives {
+        repositories.mavenDeployer {
+            configuration = configurations.deployerJars
+            def credentials = [ 
+                userName: System.getProperty('deploy.username'), 
+                password: System.getProperty('deploy.password') 
+            ] 
+            repository(
+                url: "http://dev.apaxo.de:8080/nexus/content/repositories/apaxo-snapshots",
+                authentication: credentials
+            )
+        }
     }
 }
 
