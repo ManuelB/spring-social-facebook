@@ -12,13 +12,15 @@ configure(allprojects) {
     apply plugin: 'eclipse'
     apply plugin: 'idea'
 
-    group = 'org.springframework.social'
+    group = 'org.apaxo.springframework.social'
 
     sourceCompatibility=1.5
     targetCompatibility=1.5
 
     ext {
-      springSocialVersion = '1.1.0.BUILD-SNAPSHOT'
+      springSocialVersion = '1.0.3.RELEASE'
+      springSocialSecurityVersion = '1.1.0.M3'
+      springSocialConfigVersion = '1.1.0.M3'
       hamcrestVersion = '1.3'
       jacksonVersion = '2.2.2'
       jspApiVersion = '2.2.1'
@@ -36,6 +38,7 @@ configure(allprojects) {
     test.systemProperty("java.awt.headless", "true")
 
     repositories {
+        maven { url "http://repo.springsource.org/release"}
         mavenCentral()
         maven { url "http://repo.springsource.org/libs-snapshot" }
     }
@@ -123,8 +126,8 @@ project('spring-social-facebook') {
     description = 'Facebook API'
     dependencies {
         compile ("org.springframework.social:spring-social-core:$springSocialVersion")
-        compile ("org.springframework.social:spring-social-config:$springSocialVersion")
-        compile ("org.springframework.social:spring-social-security:$springSocialVersion", optional)
+        compile ("org.springframework.social:spring-social-config:$springSocialConfigVersion")
+        compile ("org.springframework.social:spring-social-security:$springSocialSecurityVersion", optional)
         compile ("com.fasterxml.jackson.core:jackson-core:$jacksonVersion")
         compile ("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
         compile ("com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion")
@@ -137,7 +140,7 @@ project('spring-social-facebook-web') {
     description = 'Facebook Web'
     dependencies {
         compile ("org.springframework:spring-web:$springVersion")
-        compile ("org.springframework.social:spring-social-core:$springSocialVersion", optional)
+        compile ("org.springframework.social:spring-social-core:$springSocialSecurityVersion", optional)
         compile project(':spring-social-facebook', optional)
         compile ("org.springframework.security:spring-security-crypto:$springSecurityCryptoVersion", optional)
         compile ("com.fasterxml.jackson.core:jackson-core:$jacksonVersion", optional)
