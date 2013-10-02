@@ -36,8 +36,8 @@ import com.fasterxml.jackson.databind.SerializationConfig;
  * @author Karthick Sankarachary
  */
 public class FacebookAdsTemplateTest {
-    private String accessToken;
-    private String accountId;
+    private String accessToken = "CAAH62TEKjNcBAJtd3Ompv7B1g4ximbhu3SzowdminDULx6LrjjRKrm05cimPfOTFAeiJ1Txhc2fIrpzqQclz2RYPOlQ661AFFTbZAEcZB7g8SiBBOrblVopfrv8f0Yy6lsIk8xiDhtNHj62JIV";
+    private String accountId = "61539687";
     private String campaignId;
     private String creativeId;
     private String accountGroupId;

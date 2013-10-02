@@ -1,9 +1,10 @@
 buildscript {
     repositories {
-        maven { url 'http://repo.springsource.org/plugins-release' }
+        maven { url 'http://repo.spring.io/plugins-release' }
     }
     dependencies {
-        classpath 'org.springframework.build.gradle:docbook-reference-plugin:0.2.2'
+        classpath 'org.springframework.build.gradle:docbook-reference-plugin:0.2.6'
+        classpath 'me.champeau.gradle:gradle-javadoc-hotfix-plugin:0.1'
     }
 }
 
@@ -11,6 +12,7 @@ configure(allprojects) {
     apply plugin: 'java'
     apply plugin: 'eclipse'
     apply plugin: 'idea'
+    apply plugin: 'javadocHotfix'
 
     group = 'org.apaxo.springframework.social'
 
@@ -27,7 +29,7 @@ configure(allprojects) {
       junitVersion = '4.11'
       mockitoVersion = '1.9.5'
       servletApiVersion = '2.5'
-      springSecurityCryptoVersion = '3.1.4.RELEASE'
+      springSecurityCryptoVersion = '3.2.0.RC1'
       springVersion = '3.2.3.RELEASE'
     }
 
@@ -41,6 +43,7 @@ configure(allprojects) {
         maven { url "http://repo.springsource.org/release"}
         mavenCentral()
         maven { url "http://repo.springsource.org/libs-snapshot" }
+        maven { url "http://repo.spring.io/libs-snapshot" }
     }
 
     dependencies {
@@ -55,6 +58,16 @@ configure(allprojects) {
     // to changing APIs across these versions
     eclipse.classpath.file.whenMerged { classpath ->
         classpath.entries.findAll { entry -> entry.path.contains('servlet-api') }*.exported = false
+
+        // When the root project's name is the same as a dependency project's name, the name ends
+        // up being duplicated in the classpath entry. For example a dependency on "spring-social-facebook"
+        // would have a path of "/spring-social-facebook-spring-social-facebook".
+        // The following lines set the path properly in that case.
+        classpath.entries.findAll { entry -> 
+            if (entry.path.equals("/" + rootProject.name + "-" + rootProject.name)) {
+                entry.path = "/" + rootProject.name;
+            }
+        }
     }
 }
 

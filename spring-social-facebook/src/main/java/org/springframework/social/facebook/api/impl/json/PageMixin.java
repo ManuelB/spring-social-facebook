@@ -15,15 +15,20 @@
  */
 package org.springframework.social.facebook.api.impl.json;
 
+import java.io.IOException;
 import java.util.Map;
 
 import org.springframework.social.facebook.api.CoverPhoto;
 import org.springframework.social.facebook.api.Location;
 
-import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.JsonToken;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /**
@@ -31,7 +36,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
  * @author Craig Walls
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-abstract class PageMixin {
+abstract class PageMixin extends FacebookObjectMixin {
 
 	@JsonCreator
 	PageMixin(
@@ -47,6 +52,7 @@ abstract class PageMixin {
 	String about;
 	
 	@JsonProperty("location")
+	@JsonDeserialize(using=LocationDeserializer.class)
 	Location location;
 
 	@JsonProperty("website")
@@ -92,7 +98,14 @@ abstract class PageMixin {
 	@JsonProperty("hours")
 	private Map<String, String> hours;
 	
-	@JsonAnySetter
-	abstract void add(String key, Object value);
+	private static class LocationDeserializer extends JsonDeserializer<Location> {
+		@Override
+		public Location deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+			if (jp.getCurrentToken() == JsonToken.START_OBJECT) {
+				return jp.readValueAs(Location.class);
+			}
+			return new Location(jp.getText());
+		}
+	}
 
 }
