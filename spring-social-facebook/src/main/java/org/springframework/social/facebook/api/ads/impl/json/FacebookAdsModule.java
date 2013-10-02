@@ -29,7 +29,12 @@ import org.springframework.social.facebook.api.ads.User;
  */
 public class FacebookAdsModule extends com.fasterxml.jackson.databind.module.SimpleModule {
 
-	public FacebookAdsModule() {
+	/**
+     * 
+     */
+    private static final long serialVersionUID = 3920490142416015474L;
+
+    public FacebookAdsModule() {
 		super("FacebookAdsModule");
 	}
 
