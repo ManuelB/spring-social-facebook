@@ -20,7 +20,7 @@ configure(allprojects) {
     targetCompatibility=1.5
 
     ext {
-      springSocialVersion = '1.0.3.RELEASE'
+      springSocialVersion = '1.1.0.M3'
       springSocialSecurityVersion = '1.1.0.M3'
       springSocialConfigVersion = '1.1.0.M3'
       hamcrestVersion = '1.3'
