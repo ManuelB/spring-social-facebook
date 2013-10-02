@@ -16,6 +16,7 @@
 package org.springframework.social.facebook.api.ads;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Karthick Sankarachary
@@ -33,7 +34,7 @@ public class AdGroup {
 	private int endTime;
 	private int startTime;
 	private int updatedTime;
-	private List<String> bidInfo;
+	private Map<String,String> bidInfo;
 	private List<String> disapproveReasonDescriptions;
 
 	public long getAdId() {
@@ -132,11 +133,11 @@ public class AdGroup {
 		this.updatedTime = updatedTime;
 	}
 
-	public List<String> getBidInfo() {
+	public Map<String,String> getBidInfo() {
 		return bidInfo;
 	}
 
-	public void setBidInfo(List<String> bidInfo) {
+	public void setBidInfo(Map<String,String> bidInfo) {
 		this.bidInfo = bidInfo;
 	}
 
