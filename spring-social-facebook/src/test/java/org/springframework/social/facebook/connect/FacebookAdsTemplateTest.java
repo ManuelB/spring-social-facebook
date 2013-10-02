@@ -21,6 +21,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.social.facebook.api.ads.AccountGroupOperations;
 import org.springframework.social.facebook.api.ads.AccountOperations;
+import org.springframework.social.facebook.api.ads.AdCreative;
 import org.springframework.social.facebook.api.ads.CampaignOperations;
 import org.springframework.social.facebook.api.ads.CreativeOperations;
 import org.springframework.social.facebook.api.ads.impl.FacebookAdsTemplate;
@@ -130,5 +131,16 @@ public class FacebookAdsTemplateTest {
         CreativeOperations creativeOps = template.creativeOperations();
         mapper.writeValue(System.out, creativeOps.getCreatives(accountId));
         mapper.writeValue(System.out, creativeOps.getCreative(creativeId));
+    }
+
+    @Test
+    public void testCreativeCreateOperations() throws JsonGenerationException,
+            JsonMappingException, IOException {
+        CreativeOperations creativeOps = template.creativeOperations();
+        AdCreative creative = new AdCreative();
+        creative.setTitle("Hallo Welt");
+        creative.setBody("Test 1234");
+        mapper.writeValue(System.out, creativeOps.createCreative("123456", creative));
+        
     }
 }

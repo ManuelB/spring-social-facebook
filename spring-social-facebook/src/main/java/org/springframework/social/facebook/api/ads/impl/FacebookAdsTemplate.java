@@ -15,8 +15,8 @@
  */
 package org.springframework.social.facebook.api.ads.impl;
 
+import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
 import org.springframework.social.facebook.api.ads.AccountGroupOperations;
 import org.springframework.social.facebook.api.ads.AccountOperations;
 import org.springframework.social.facebook.api.ads.AdGroupOperations;
@@ -30,63 +30,71 @@ import org.springframework.social.facebook.api.impl.FacebookTemplate;
  * @author Karthick Sankarachary
  */
 public class FacebookAdsTemplate extends FacebookTemplate implements
-		FacebookAds {
-	private AccountOperations accountOperations;
-	private AccountGroupOperations accountGroupOperations;
-	private CampaignOperations campaignOperations;
-	private CreativeOperations creativeOperations;
-	private AdGroupOperations adGroupOperations;
+        FacebookAds {
+    private AccountOperations accountOperations;
+    private AccountGroupOperations accountGroupOperations;
+    private CampaignOperations campaignOperations;
+    private CreativeOperations creativeOperations;
+    private AdGroupOperations adGroupOperations;
 
-	public FacebookAdsTemplate() {
-		super();
-		initialize();
-	}
+    public FacebookAdsTemplate() {
+        super();
+        initialize();
+    }
 
-	public FacebookAdsTemplate(String accessToken) {
-		super(accessToken);
-		initialize();
-	}
+    public FacebookAdsTemplate(String accessToken) {
+        super(accessToken);
+        initialize();
+    }
 
-	private void initialize() {
-		initSubApis();
-	}
+    private void initialize() {
+        initSubApis();
+    }
 
-	private void initSubApis() {
-		accountOperations = new AccountTemplate(this, getRestTemplate(),
-				isAuthorized());
-		accountGroupOperations = new AccountGroupTemplate(this, isAuthorized());
-		campaignOperations = new CampaignTemplate(this, isAuthorized());
-		creativeOperations = new CreativeTemplate(this, isAuthorized());
-		adGroupOperations = new AdGroupTemplate(this, getRestTemplate(),
-				isAuthorized());
-	}
+    private void initSubApis() {
+        accountOperations = new AccountTemplate(this, getRestTemplate(),
+                isAuthorized());
+        accountGroupOperations = new AccountGroupTemplate(this, isAuthorized());
+        campaignOperations = new CampaignTemplate(this, isAuthorized());
+        creativeOperations = new CreativeTemplate(this, isAuthorized());
+        adGroupOperations = new AdGroupTemplate(this, getRestTemplate(),
+                isAuthorized());
+    }
 
-	public AccountOperations accountOperations() {
-		return accountOperations;
-	}
+    @Override
+    protected FormHttpMessageConverter getFormMessageConverter() {
+        FormHttpMessageConverter formHttpMessageConverter = super
+                .getFormMessageConverter();
+        formHttpMessageConverter.addPartConverter(new MappingJackson2HttpMessageConverter());
+        return formHttpMessageConverter;
+    }
 
-	public AccountGroupOperations accountGroupOperations() {
-		return accountGroupOperations;
-	}
+    public AccountOperations accountOperations() {
+        return accountOperations;
+    }
 
-	public CampaignOperations campaignOperations() {
-		return campaignOperations;
-	}
+    public AccountGroupOperations accountGroupOperations() {
+        return accountGroupOperations;
+    }
 
-	public CreativeOperations creativeOperations() {
-		return creativeOperations;
-	}
+    public CampaignOperations campaignOperations() {
+        return campaignOperations;
+    }
 
-	public AdGroupOperations adGroupOperations() {
-		return adGroupOperations;
-	}
+    public CreativeOperations creativeOperations() {
+        return creativeOperations;
+    }
 
-	@Override
-	protected MappingJackson2HttpMessageConverter getJsonMessageConverter() {
-		MappingJackson2HttpMessageConverter converter = super
-				.getJsonMessageConverter();
-		objectMapper.registerModule(new FacebookAdsModule());
-		converter.setObjectMapper(objectMapper);
-		return converter;
-	}
+    public AdGroupOperations adGroupOperations() {
+        return adGroupOperations;
+    }
+
+    @Override
+    protected MappingJackson2HttpMessageConverter getJsonMessageConverter() {
+        MappingJackson2HttpMessageConverter converter = super
+                .getJsonMessageConverter();
+        objectMapper.registerModule(new FacebookAdsModule());
+        converter.setObjectMapper(objectMapper);
+        return converter;
+    }
 }
