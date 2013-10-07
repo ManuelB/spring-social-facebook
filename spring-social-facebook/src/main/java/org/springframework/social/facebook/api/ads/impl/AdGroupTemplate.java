@@ -85,7 +85,7 @@ class AdGroupTemplate extends AbstractAdsOperations implements
 		data.set("bid_type", adGroup.getBidType().getValue());
 		data.set("max_bid", adGroup.getMaxBid());
 		data.set("targeting", adGroup.getTargeting());
-		data.set("creative", adGroup.getCreative());
+		data.set("creative", "{'creative_id':"+adGroup.getCreative().getCreativeId()+"}");
 		data.set("adgroup_id", adGroup.getAdGroupId());
 		data.set("end_time", adGroup.getEndTime());
 		data.set("start_time", adGroup.getStartTime());
