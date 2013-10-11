@@ -21,7 +21,6 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.http.HttpOutputMessage;
 import org.springframework.http.MediaType;
@@ -38,12 +37,14 @@ import org.springframework.social.facebook.api.ads.AdGroupOperations;
 import org.springframework.social.facebook.api.ads.CampaignOperations;
 import org.springframework.social.facebook.api.ads.CreativeOperations;
 import org.springframework.social.facebook.api.ads.FacebookAds;
+import org.springframework.social.facebook.api.ads.MailAudienceOperations;
 import org.springframework.social.facebook.api.ads.impl.json.FacebookAdsModule;
 import org.springframework.social.facebook.api.impl.FacebookTemplate;
 import org.springframework.util.MultiValueMap;
 import org.springframework.util.StreamUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.org.apache.bcel.internal.classfile.Field;
 
 /**
  * @author Karthick Sankarachary
@@ -55,6 +56,7 @@ public class FacebookAdsTemplate extends FacebookTemplate implements
     private CampaignOperations     campaignOperations;
     private CreativeOperations     creativeOperations;
     private AdGroupOperations      adGroupOperations;
+    private MailAudienceOperations mailAudienceOperations;
 
     public FacebookAdsTemplate() {
         super();
@@ -78,6 +80,9 @@ public class FacebookAdsTemplate extends FacebookTemplate implements
         creativeOperations = new CreativeTemplate(this, isAuthorized());
         adGroupOperations = new AdGroupTemplate(this, getRestTemplate(),
                 isAuthorized());
+        
+        mailAudienceOperations = new MailAudienceTemplate(this, isAuthorized());
+        
     }
 
     @Override
@@ -105,19 +110,25 @@ public class FacebookAdsTemplate extends FacebookTemplate implements
                 for (Iterator<String> nameIterator = form.keySet().iterator(); nameIterator
                         .hasNext();) {
                     String name = nameIterator.next();
+                    
+                    
                     for (Iterator<?> valueIterator = form.get(name).iterator(); valueIterator
                             .hasNext();) {
 
                         Object o = valueIterator.next();
 
                         String value = o == null ? null : o.toString();
+                        
+                        
 
                         if (o != null && !(o instanceof String)
                                 && !(o instanceof Integer)) {
                             value = objectMapper.writeValueAsString(o);
                         }
-
+                        
+                        
                         builder.append(URLEncoder.encode(name, charset.name()));
+                        
                         if (value != null) {
                             builder.append('=');
                             builder.append(URLEncoder.encode(value,
@@ -127,10 +138,14 @@ public class FacebookAdsTemplate extends FacebookTemplate implements
                             }
                         }
                     }
+                    
+                    
                     if (nameIterator.hasNext()) {
                         builder.append('&');
                     }
                 }
+                
+                
                 byte[] bytes = builder.toString().getBytes(charset.name());
                 outputMessage.getHeaders().setContentLength(bytes.length);
                 StreamUtils.copy(bytes, outputMessage.getBody());
@@ -167,6 +182,10 @@ public class FacebookAdsTemplate extends FacebookTemplate implements
 
     public AdGroupOperations adGroupOperations() {
         return adGroupOperations;
+    }
+
+    public MailAudienceOperations mailAudienceOperations() {
+        return mailAudienceOperations;
     }
 
     @Override
